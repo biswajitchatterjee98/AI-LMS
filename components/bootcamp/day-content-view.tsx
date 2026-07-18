@@ -11,7 +11,7 @@ import type { BootcampDayContent } from "@/lib/models";
 function McqItem({ mcq }: { mcq: BootcampDayContent["mcqs"][number] }) {
   const [picked, setPicked] = useState<number | null>(null);
   return (
-    <div className="rounded-md border p-3">
+    <div className="rounded-xl border border-border bg-muted/20 p-3.5">
       <p className="mb-2 text-sm font-medium">{mcq.question}</p>
       <div className="grid gap-1.5 sm:grid-cols-2">
         {mcq.options.map((opt, i) => {
@@ -24,10 +24,10 @@ function McqItem({ mcq }: { mcq: BootcampDayContent["mcqs"][number] }) {
               onClick={() => setPicked(i)}
               disabled={picked !== null}
               className={cn(
-                "flex items-center justify-between rounded-md border px-2.5 py-1.5 text-left text-sm transition-colors",
+                "flex items-center justify-between rounded-lg border border-border bg-card px-2.5 py-1.5 text-left text-sm transition-all duration-150",
                 showCorrect && "border-emerald-500 bg-emerald-500/10",
                 showWrong && "border-destructive bg-destructive/10",
-                !showCorrect && !showWrong && "hover:bg-muted"
+                !showCorrect && !showWrong && "hover:border-primary/40 hover:bg-accent"
               )}
             >
               {opt}
@@ -44,7 +44,7 @@ function McqItem({ mcq }: { mcq: BootcampDayContent["mcqs"][number] }) {
 function RevealItem({ question, answer, answerLabel }: { question: string; answer: string; answerLabel: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-md border p-3">
+    <div className="rounded-xl border border-border bg-muted/20 p-3.5">
       <p className="text-sm font-medium">{question}</p>
       {open ? (
         <p className="mt-2 text-sm text-muted-foreground">{answer}</p>

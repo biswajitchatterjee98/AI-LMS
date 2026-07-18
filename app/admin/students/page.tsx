@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -8,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { usersCol, quizResponsesCol, pollResponsesCol } from "@/lib/models";
+import { usersCol, quizResponsesCol, pollResponsesCol, registrationsCol } from "@/lib/models";
 import { leads } from "@/lib/mock-data";
 
 const interestVariant: Record<string, "default" | "secondary" | "outline"> = {
@@ -31,10 +32,11 @@ function timeAgo(date: Date | undefined) {
 }
 
 export default async function AdminStudentsPage() {
-  const [users, quizResponses, pollResponses] = await Promise.all([
+  const [users, quizResponses, pollResponses, registrations] = await Promise.all([
     usersCol().then((col) => col.find({ role: "student" }).sort({ createdAt: -1 }).toArray()),
     quizResponsesCol().then((col) => col.find({}).toArray()),
     pollResponsesCol().then((col) => col.find({}).toArray()),
+    registrationsCol().then((col) => col.find({}).sort({ submittedAt: -1 }).toArray()),
   ]);
 
   const students = users.map((u) => {
@@ -69,74 +71,138 @@ export default async function AdminStudentsPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Students</h1>
         <p className="text-sm text-muted-foreground">
-          Enrollments, XP, live quiz &amp; poll participation, and last active time.
+          Enrollments, XP, live quiz &amp; poll participation, and AI Practitioner Program registrations.
         </p>
       </div>
 
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>XP</TableHead>
-                <TableHead>Quizzes Taken</TableHead>
-                <TableHead>Avg Quiz Score</TableHead>
-                <TableHead>Polls Answered</TableHead>
-                <TableHead>Last Active</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {students.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center text-muted-foreground">
-                    No students have signed up yet.
-                  </TableCell>
-                </TableRow>
-              )}
-              {students.map((s) => (
-                <TableRow key={s.id}>
-                  <TableCell>
-                    <div className="font-medium">{s.name}</div>
-                    <div className="text-xs text-muted-foreground">{s.email}</div>
-                  </TableCell>
-                  <TableCell>{s.xp} XP</TableCell>
-                  <TableCell>{s.quizzesTaken}</TableCell>
-                  <TableCell>{s.avgQuizScore !== null ? `${s.avgQuizScore}%` : "—"}</TableCell>
-                  <TableCell>{s.pollsAnswered}</TableCell>
-                  <TableCell className="text-muted-foreground">{timeAgo(s.lastActive)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="students">
+        <TabsList>
+          <TabsTrigger value="students">Students</TabsTrigger>
+          <TabsTrigger value="registrations">
+            Registrations
+            {registrations.length > 0 && (
+              <Badge variant="secondary" className="ml-1 h-4.5 px-1.5 text-[10px]">
+                {registrations.length}
+              </Badge>
+            )}
+          </TabsTrigger>
+        </TabsList>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Leads</CardTitle>
-          <CardDescription>Bootcamp interest form submissions and in-app leads.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="divide-y">
-            {leads.map((lead) => (
-              <li key={lead.id} className="flex items-center justify-between py-3 text-sm">
-                <div>
-                  <p className="font-medium">
-                    {lead.name} <span className="font-normal text-muted-foreground">&middot; {lead.org}</span>
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {lead.useCases.length > 0 ? lead.useCases.join(", ") : "No use cases captured"}
-                  </p>
-                </div>
-                <Badge variant={interestVariant[lead.interestLevel]} className="capitalize">
-                  {lead.interestLevel.replace(/_/g, " ")}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+        <TabsContent value="students" className="space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>XP</TableHead>
+                    <TableHead>Quizzes Taken</TableHead>
+                    <TableHead>Avg Quiz Score</TableHead>
+                    <TableHead>Polls Answered</TableHead>
+                    <TableHead>Last Active</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {students.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-muted-foreground">
+                        No students have signed up yet.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {students.map((s) => (
+                    <TableRow key={s.id}>
+                      <TableCell>
+                        <div className="font-medium">{s.name}</div>
+                        <div className="text-xs text-muted-foreground">{s.email}</div>
+                      </TableCell>
+                      <TableCell>{s.xp} XP</TableCell>
+                      <TableCell>{s.quizzesTaken}</TableCell>
+                      <TableCell>{s.avgQuizScore !== null ? `${s.avgQuizScore}%` : "—"}</TableCell>
+                      <TableCell>{s.pollsAnswered}</TableCell>
+                      <TableCell className="text-muted-foreground">{timeAgo(s.lastActive)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Leads</CardTitle>
+              <CardDescription>Bootcamp interest form submissions and in-app leads.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="divide-y">
+                {leads.map((lead) => (
+                  <li key={lead.id} className="flex items-center justify-between py-3 text-sm">
+                    <div>
+                      <p className="font-medium">
+                        {lead.name} <span className="font-normal text-muted-foreground">&middot; {lead.org}</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {lead.useCases.length > 0 ? lead.useCases.join(", ") : "No use cases captured"}
+                      </p>
+                    </div>
+                    <Badge variant={interestVariant[lead.interestLevel]} className="capitalize">
+                      {lead.interestLevel.replace(/_/g, " ")}
+                    </Badge>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="registrations">
+          <Card>
+            <CardHeader>
+              <CardTitle>AI Practitioner Program registrations</CardTitle>
+              <CardDescription>Submissions from the public registration form.</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Organization</TableHead>
+                    <TableHead>Experience</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Submitted</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {registrations.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center text-muted-foreground">
+                        No registrations yet.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {registrations.map((r) => (
+                    <TableRow key={r._id!.toString()}>
+                      <TableCell className="font-medium">{r.fullName}</TableCell>
+                      <TableCell className="text-muted-foreground">{r.email}</TableCell>
+                      <TableCell className="text-muted-foreground">{r.phone}</TableCell>
+                      <TableCell>{r.organization}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="capitalize">
+                          {r.experienceLevel}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">{r.currentRole}</TableCell>
+                      <TableCell className="text-muted-foreground">{timeAgo(r.submittedAt)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

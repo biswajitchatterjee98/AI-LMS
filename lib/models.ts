@@ -1,5 +1,6 @@
 import type { ObjectId } from "mongodb";
 import { getDb } from "@/lib/mongodb";
+import type { LessonBlock } from "@/lib/curriculum/blocks";
 
 // ---------- Users ----------
 
@@ -25,6 +26,7 @@ export interface CourseLessonDoc {
   status: "not_started" | "in_progress" | "done";
   content?: string;
   pdfUrl?: string;
+  contentBlocks?: LessonBlock[];
 }
 
 export interface CourseModuleDoc {
@@ -193,6 +195,40 @@ export interface ApiKeyDoc {
   updatedAt: Date;
 }
 
+// ---------- Per-lesson progress (multi-user) ----------
+
+export type LessonStatus = "not_started" | "in_progress" | "done";
+
+export interface ProgressDoc {
+  _id?: ObjectId;
+  userId: string;
+  courseId: string;
+  moduleId: string;
+  lessonId: string;
+  status: LessonStatus;
+  completionPercentage: number; // 0-100
+  quizScore?: number; // 0-100, this lesson's embedded quiz, last attempt
+  xpAwarded: number; // total XP already granted for this lesson (idempotency guard)
+  updatedAt: Date;
+  completedAt?: Date;
+}
+
+// ---------- AI Practitioner Program registrations ----------
+
+export type ExperienceLevel = "beginner" | "intermediate" | "advanced";
+
+export interface RegistrationDoc {
+  _id?: ObjectId;
+  fullName: string;
+  email: string;
+  phone: string;
+  organization: string;
+  experienceLevel: ExperienceLevel;
+  currentRole: string;
+  reasonForJoining: string;
+  submittedAt: Date;
+}
+
 // ---------- Collection accessors ----------
 
 export async function usersCol() {
@@ -238,4 +274,14 @@ export async function assessmentsCol() {
 export async function apiKeysCol() {
   const db = await getDb();
   return db.collection<ApiKeyDoc>("apiKeys");
+}
+
+export async function progressCol() {
+  const db = await getDb();
+  return db.collection<ProgressDoc>("progress");
+}
+
+export async function registrationsCol() {
+  const db = await getDb();
+  return db.collection<RegistrationDoc>("registrations");
 }

@@ -16,7 +16,7 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import { bootcampSeedContent } from "../lib/seed-data/bootcamp-content";
-import { courses as seedCourses } from "../lib/mock-data";
+import { curriculumCourse } from "../lib/curriculum";
 
 async function main() {
   const uri = process.env.MONGODB_URI;
@@ -46,6 +46,12 @@ async function main() {
 
   const courses = db.collection("courses");
   await courses.createIndex({ slug: 1 }, { unique: true, sparse: true });
+
+  const progress = db.collection("progress");
+  await progress.createIndex({ userId: 1, lessonId: 1 }, { unique: true });
+
+  const registrations = db.collection("registrations");
+  await registrations.createIndex({ submittedAt: -1 });
 
   console.log("Indexes ensured.");
 
@@ -80,15 +86,19 @@ async function main() {
     console.log(`Upserted bootcamp content for Day ${day.dayNumber}: ${day.title}`);
   }
 
-  // ---- Seed the course catalog (upsert by slug = the mock course id, safe to re-run) ----
-  for (const course of seedCourses) {
-    const { id: slug, ...rest } = course;
+  // ---- Retire the old flat 3-course catalog, replaced by the 8-module curriculum below ----
+  const retired = await courses.deleteMany({ slug: { $in: ["course-1", "course-2", "course-3", "course-4"] } });
+  if (retired.deletedCount > 0) console.log(`Retired ${retired.deletedCount} old course(s).`);
+
+  // ---- Seed the AI Practitioner Program curriculum (upsert by slug, safe to re-run) ----
+  {
+    const { id: slug, ...rest } = curriculumCourse;
     await courses.updateOne(
       { slug },
       { $set: { ...rest, slug, updatedAt: new Date() }, $setOnInsert: { createdAt: new Date() } },
       { upsert: true }
     );
-    console.log(`Upserted course: ${course.title}`);
+    console.log(`Upserted course: ${curriculumCourse.title}`);
   }
 
   await client.close();

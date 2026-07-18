@@ -214,7 +214,7 @@ export default function AdminCoursesPage() {
                 {course.modules.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No modules yet.</p>
                 ) : (
-                  <Accordion>
+                  <Accordion multiple defaultValue={course.modules.map((mod) => mod.id)}>
                     {course.modules.map((mod) => (
                       <AccordionItem key={mod.id} value={mod.id}>
                         <AccordionTrigger className="text-sm">{mod.title}</AccordionTrigger>

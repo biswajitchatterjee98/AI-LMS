@@ -2,6 +2,33 @@ import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { getSession } from "@/lib/auth";
 import { coursesCol } from "@/lib/models";
+import { buildLessonDigest } from "@/lib/curriculum/lesson-digest";
+
+async function lessonContext(lessonId: string) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+
+  const col = await coursesCol();
+  const course = await col.findOne({ isPublished: true });
+  if (!course) return NextResponse.json({ error: "Not found." }, { status: 404 });
+
+  const allLessons = course.modules.flatMap((m) => m.lessons.map((l) => ({ ...l, moduleTitle: m.title })));
+  const index = allLessons.findIndex((l) => l.id === lessonId);
+  if (index === -1) return NextResponse.json({ error: "Not found." }, { status: 404 });
+
+  const lesson = allLessons[index];
+  const next = allLessons[index + 1];
+
+  return NextResponse.json({
+    lessonId: lesson.id,
+    title: lesson.title,
+    moduleTitle: lesson.moduleTitle,
+    courseTitle: course.title,
+    digest: buildLessonDigest(lesson.title, lesson.contentBlocks),
+    nextLessonId: next?.id ?? null,
+    nextLessonTitle: next?.title ?? null,
+  });
+}
 
 async function listCourses() {
   const session = await getSession();
@@ -78,6 +105,7 @@ async function deleteCourse(id: string) {
 export async function GET(_req: Request, { params }: { params: Promise<{ action?: string[] }> }) {
   const { action } = await params;
   if (!action || action.length === 0) return listCourses();
+  if (action.length === 2 && action[0] === "lesson") return lessonContext(action[1]);
   return NextResponse.json({ error: "Not found." }, { status: 404 });
 }
 

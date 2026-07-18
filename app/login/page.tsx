@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import Link from "next/link";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,12 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (params.get("error") === "unauthorized") {
+      setError("Please log in to access the LMS.");
+    }
+  }, [params]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -42,11 +47,13 @@ function LoginForm() {
 
   return (
     <div className="ai-bg flex min-h-screen flex-col items-center justify-center px-6">
-      <div className="mb-8 flex items-center gap-2">
-        <Sparkles className="size-6 text-primary" />
-        <span className="text-xl font-semibold tracking-tight">Adaptive AI LMS</span>
+      <div className="mb-8 flex items-center gap-2.5">
+        <span className="brand-gradient flex size-8 items-center justify-center rounded-xl shadow-[0_2px_10px_-2px_rgb(79_70_229_/_0.45)]">
+          <Sparkles className="size-4.5 text-white" />
+        </span>
+        <span className="font-heading text-xl font-semibold tracking-tight">Adaptive AI LMS</span>
       </div>
-      <Card className="w-full max-w-sm">
+      <Card className="glass-panel w-full max-w-sm border-border shadow-lg">
         <CardHeader>
           <CardTitle>Log in</CardTitle>
           <CardDescription>Students and admins both log in here.</CardDescription>
@@ -80,12 +87,6 @@ function LoginForm() {
               {loading ? "Logging in..." : "Log in"}
             </Button>
           </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            New student?{" "}
-            <Link href="/signup" className="font-medium text-primary underline-offset-4 hover:underline">
-              Create an account
-            </Link>
-          </p>
         </CardContent>
       </Card>
     </div>

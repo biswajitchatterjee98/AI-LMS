@@ -29,6 +29,7 @@ export async function proxy(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", pathname);
+    url.searchParams.set("error", "unauthorized");
     return NextResponse.redirect(url);
   }
 
@@ -44,7 +45,7 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if ((pathname === "/login" || pathname === "/signup") && session) {
+  if (pathname === "/login" && session) {
     const url = req.nextUrl.clone();
     url.pathname = session.role === "admin" ? "/admin" : "/student";
     return NextResponse.redirect(url);
@@ -54,5 +55,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/student/:path*", "/login", "/signup"],
+  matcher: ["/admin/:path*", "/student/:path*", "/login"],
 };

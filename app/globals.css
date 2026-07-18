@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-poppins);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,72 +49,76 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --popover: #ffffff;
+  --popover-foreground: #1e293b;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2ff;
+  --secondary-foreground: #4338ca;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eef2ff;
+  --accent-foreground: #4f46e5;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #4f46e5;
+  --chart-1: #4f46e5;
+  --chart-2: #8b5cf6;
+  --chart-3: #0ea5e9;
+  --chart-4: #f59e0b;
+  --chart-5: #64748b;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef2ff;
+  --sidebar-accent-foreground: #4f46e5;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #4f46e5;
+  --brand-from: #4f46e5;
+  --brand-to: #8b5cf6;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #818cf8;
+  --primary-foreground: #1e1b4b;
+  --secondary: #312e5c;
+  --secondary-foreground: #e0e7ff;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #312e5c;
+  --accent-foreground: #c7d2fe;
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: #818cf8;
+  --chart-1: #818cf8;
+  --chart-2: #a78bfa;
+  --chart-3: #38bdf8;
+  --chart-4: #fbbf24;
+  --chart-5: #94a3b8;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #818cf8;
+  --sidebar-primary-foreground: #1e1b4b;
+  --sidebar-accent: #312e5c;
+  --sidebar-accent-foreground: #c7d2fe;
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: #818cf8;
+  --brand-from: #818cf8;
+  --brand-to: #a78bfa;
 }
 
 @layer base {
@@ -127,23 +131,104 @@
   html {
     @apply font-sans;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight text-foreground;
+  }
 }
 
-/* AI-themed background: soft glow blobs + a tiled neural-network/circuit pattern. */
+/* Premium AI-themed background: layered indigo/violet/cyan glow blobs, slowly
+   drifting. Paired with <AiBackgroundMotif> (circuit-trace pattern + floating
+   icon watermarks) rendered behind the sidebar/header/cards in AppShell. */
 .ai-bg {
   background-color: var(--background);
   background-image:
-    radial-gradient(circle at 12% 18%, oklch(0.7 0.16 264 / 14%), transparent 42%),
-    radial-gradient(circle at 88% 82%, oklch(0.75 0.16 200 / 12%), transparent 46%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%23000000' stroke-opacity='0.05' stroke-width='1.4'%3E%3Cpath d='M20 30 L80 65 L150 28 L200 75'/%3E%3Cpath d='M10 130 L65 108 L120 160 L190 138'/%3E%3Cpath d='M45 185 L100 205 L165 175'/%3E%3Cpath d='M80 65 L65 108'/%3E%3Cpath d='M150 28 L190 138'/%3E%3Cpath d='M120 160 L100 205'/%3E%3C/g%3E%3Cg fill='%23000000' fill-opacity='0.09'%3E%3Ccircle cx='20' cy='30' r='3'/%3E%3Ccircle cx='80' cy='65' r='3'/%3E%3Ccircle cx='150' cy='28' r='3'/%3E%3Ccircle cx='200' cy='75' r='3'/%3E%3Ccircle cx='10' cy='130' r='3'/%3E%3Ccircle cx='65' cy='108' r='3'/%3E%3Ccircle cx='120' cy='160' r='3'/%3E%3Ccircle cx='190' cy='138' r='3'/%3E%3Ccircle cx='45' cy='185' r='3'/%3E%3Ccircle cx='100' cy='205' r='3'/%3E%3Ccircle cx='165' cy='175' r='3'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat, no-repeat, repeat;
-  background-size: cover, cover, 220px 220px;
-  background-attachment: fixed, fixed, local;
+    radial-gradient(circle at 12% 12%, color-mix(in oklab, var(--brand-from) 16%, transparent), transparent 45%),
+    radial-gradient(circle at 88% 18%, color-mix(in oklab, var(--chart-3, #0ea5e9) 12%, transparent), transparent 42%),
+    radial-gradient(circle at 90% 88%, color-mix(in oklab, var(--brand-to) 16%, transparent), transparent 48%),
+    radial-gradient(circle at 8% 92%, color-mix(in oklab, var(--brand-from) 10%, transparent), transparent 45%);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: cover, cover, cover, cover;
+  background-attachment: fixed, fixed, fixed, fixed;
+  animation: ai-bg-drift 26s ease-in-out infinite alternate;
 }
 
 .dark .ai-bg {
   background-image:
-    radial-gradient(circle at 12% 18%, oklch(0.55 0.19 264 / 20%), transparent 42%),
-    radial-gradient(circle at 88% 82%, oklch(0.6 0.2 200 / 16%), transparent 46%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1.4'%3E%3Cpath d='M20 30 L80 65 L150 28 L200 75'/%3E%3Cpath d='M10 130 L65 108 L120 160 L190 138'/%3E%3Cpath d='M45 185 L100 205 L165 175'/%3E%3Cpath d='M80 65 L65 108'/%3E%3Cpath d='M150 28 L190 138'/%3E%3Cpath d='M120 160 L100 205'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='0.12'%3E%3Ccircle cx='20' cy='30' r='3'/%3E%3Ccircle cx='80' cy='65' r='3'/%3E%3Ccircle cx='150' cy='28' r='3'/%3E%3Ccircle cx='200' cy='75' r='3'/%3E%3Ccircle cx='10' cy='130' r='3'/%3E%3Ccircle cx='65' cy='108' r='3'/%3E%3Ccircle cx='120' cy='160' r='3'/%3E%3Ccircle cx='190' cy='138' r='3'/%3E%3Ccircle cx='45' cy='185' r='3'/%3E%3Ccircle cx='100' cy='205' r='3'/%3E%3Ccircle cx='165' cy='175' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(circle at 12% 12%, color-mix(in oklab, var(--brand-from) 28%, transparent), transparent 45%),
+    radial-gradient(circle at 88% 18%, color-mix(in oklab, var(--chart-3, #38bdf8) 20%, transparent), transparent 42%),
+    radial-gradient(circle at 90% 88%, color-mix(in oklab, var(--brand-to) 24%, transparent), transparent 48%),
+    radial-gradient(circle at 8% 92%, color-mix(in oklab, var(--brand-from) 16%, transparent), transparent 45%);
+}
+
+@keyframes ai-bg-drift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+  }
+  100% {
+    background-position: 3% 4%, 97% 4%, 97% 96%, 3% 96%;
+  }
+}
+
+@keyframes ai-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+}
+
+.animate-ai-float {
+  animation-name: ai-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-bg,
+  .animate-ai-float {
+    animation: none;
+  }
+}
+
+/* Reusable premium accents */
+.brand-gradient {
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+}
+
+.brand-gradient-text {
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Print-only view for "Download PDF": renders just #printable-lesson (the
+   lesson content) via the browser's real print engine, using the exact same
+   CSS as the on-screen page - full fidelity for gradients, tables, and
+   diagrams instead of a canvas-screenshot reimplementation of CSS. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-lesson,
+  #printable-lesson * {
+    visibility: visible;
+  }
+  #printable-lesson {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0.5in;
+  }
+  .ai-bg {
+    background: none !important;
+  }
 }

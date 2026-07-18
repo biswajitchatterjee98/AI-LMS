@@ -6,7 +6,7 @@ import { usersCol } from "@/lib/models";
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
-  if (!session || session.role !== "student") redirect("/login");
+  if (!session || session.role !== "student") redirect("/login?error=unauthorized");
 
   const users = await usersCol();
   const user = await users.findOne({ _id: new ObjectId(session.userId) });
