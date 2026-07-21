@@ -18,6 +18,14 @@ export interface SessionPayload {
   role: Role;
 }
 
+/** Open-access identity when hub/cookie session is absent. */
+export const PUBLIC_STUDENT: SessionPayload = {
+  userId: "000000000000000000000000",
+  name: "Public Student",
+  email: "student@public.lms",
+  role: "student",
+};
+
 export async function createSessionToken(payload: SessionPayload): Promise<string> {
   return new SignJWT({ ...payload })
     .setProtectedHeader({ alg })
@@ -36,12 +44,14 @@ export async function verifySessionToken(token: string): Promise<SessionPayload 
 }
 
 export async function getSession(): Promise<SessionPayload | null> {
-  return {
-    userId: "000000000000000000000000",
-    name: "Public Student",
-    email: "student@public.lms",
-    role: "student",
-  };
+  const store = await cookies();
+  const token = store.get(COOKIE_NAME)?.value;
+  if (token) {
+    const session = await verifySessionToken(token);
+    if (session) return session;
+  }
+  // ponytail: hub owns cohort login — LMS stays open without a local sign-in page.
+  return PUBLIC_STUDENT;
 }
 
 export async function setSessionCookie(token: string) {
