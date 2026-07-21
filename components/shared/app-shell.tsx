@@ -44,7 +44,7 @@ export function AppShell({
           <span className="brand-gradient flex size-8 items-center justify-center rounded-xl shadow-[0_2px_10px_-2px_rgb(79_70_229_/_0.45)]">
             <Sparkles className="size-4.5 text-white" />
           </span>
-          <span className="font-heading font-semibold tracking-tight">Adaptive AI LMS</span>
+          <span className="font-heading font-semibold tracking-tight">Hands-on Practice</span>
         </div>
         <nav className="flex-1 space-y-1.5 overflow-y-auto p-4">
           {nav.map((item) => {
